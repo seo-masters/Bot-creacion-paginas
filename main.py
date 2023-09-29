@@ -1,17 +1,11 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-import pyquery as jQuery
 import json
 import pyautogui
-import js2py
-import pyscript
-import sys
 from bs4 import BeautifulSoup
-import requests
-import os
-import time
 import tkinter 
+import time
 import openai
 
 
