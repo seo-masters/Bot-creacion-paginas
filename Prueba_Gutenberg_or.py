@@ -84,6 +84,13 @@ seleccionarWidget("container")
 
 time.sleep(2)
 
+# components-button edit-post-header-toolbar__document-overview-toggle has-icon
+# elementos = driver.find_elements(By.CLASS_NAME, "components-button.block-editor-list-view-block__menu.components-dropdown-menu__toggle.has-icon")
+#     ultimo_elemento = elementos[-1]
+#     ultimo_elemento.click()
+
+# components-button edit-post-header-toolbar__document-overview-toggle is-pressed has-icon
+
 sect1 = driver.find_element(By.CLASS_NAME, "components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-container")
 sect1.click()
 

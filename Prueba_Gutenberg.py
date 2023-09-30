@@ -8,9 +8,9 @@ import time
 #Elementos:
 def insert_image(url):
     time.sleep(2)
-    wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-button-block-appender')
-    wait_and_send_keys(driver, By.CLASS_NAME, 'components-search-control__input', 'Image')
-    wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-image')
+   
+    wait_and_insert_item(driver,'Image','components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-image')
+
     wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-media-placeholder__button.is-tertiary')
     wait_and_send_keys(driver, By.CLASS_NAME, 'block-editor-media-placeholder__url-input-field', url)
     wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-media-placeholder__url-input-submit-button.has-icon')
@@ -51,7 +51,7 @@ def insert_title(driver,title,size):
     #Selecciona el icono para cambiar los botones 
     wait_and_click(driver,By.XPATH,'//button[@aria-label="Change level"]')
     time.sleep(2)
-    #Recupera todo el listado de opciones disponibles y Selecciona la ultima
+    #Recupera todo el listado de opciones disponibles y Selecciona la segun el tamaño
     btns = driver.find_elements(By.XPATH,'//div[@aria-label="Change level"]//button')
     btn = btns[size]
     aria_checked = btn.get_attribute('aria-checked')
@@ -68,11 +68,46 @@ def insert_title(driver,title,size):
     align = driver.find_elements(By.XPATH,'//div[@aria-label="Align text"]//button')
     center = align[1]
     center.click()
-    # Selecciona el ultimo icono de da opciones generales
+    # Selecciona el primer icono de da opciones generales
     wait_and_click(driver,By.CLASS_NAME,'components-dropdown.components-dropdown-menu.block-editor-block-settings-menu')
     Btns = driver.find_elements(By.CSS_SELECTOR,'.components-menu-group button')
     last_Btn = Btns[0]
     last_Btn.click()
+
+def insert_button(driver,text,url,align):
+    wait_and_insert_item(driver,"Buttons","components-button.block-editor-block-types-list__item.editor-block-list-item-buttons")
+    time.sleep(1)
+
+    #cambia el texto del interior
+    divs = driver.find_elements(By.CLASS_NAME,'block-editor-rich-text__editable.wp-block-button__link.wp-element-button.rich-text')
+
+    # Ingresa el texto al ultimo boton creado
+    divs[-1].send_keys(text)
+    divs[-1].send_keys(Keys.ESCAPE)
+
+    wait_and_click(driver,By.CLASS_NAME,'components-button.block-selection-button_select-button')
+    time.sleep(2)
+    wait_and_click(driver,By.XPATH,'//button[@aria-label="Change items justification"]')
+
+    # #Recupera todo el listado de opciones disponibles y Selecciona la segun el tamaño
+    btns = driver.find_elements(By.XPATH,'//div[@aria-label="Change items justification"]//button')
+    btn = btns[align]
+    btn.click()
+    time.sleep(2)
+
+    wait_and_click(driver,By.XPATH,'//button[@aria-label="Link"]')
+    time.sleep(1)
+
+    #Ingresa la url 
+    wait_and_send_keys(driver,By.CLASS_NAME,'block-editor-url-input__input',url)
+    wait_and_send_keys(driver,By.CLASS_NAME,'block-editor-url-input__input',Keys.ENTER)
+
+    # Selecciona el primer icono de da opciones generales
+    for _ in range(2): 
+        wait_and_click(driver,By.CLASS_NAME,'components-dropdown.components-dropdown-menu.block-editor-block-settings-menu')
+        Btns = driver.find_elements(By.CSS_SELECTOR,'.components-menu-group button')
+        last_Btn = Btns[0]
+        last_Btn.click()
 
 def wait_and_click(driver, by, value):
     element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((by, value)))
@@ -83,11 +118,21 @@ def wait_and_send_keys(driver, by, value, keys):
     element.send_keys(keys)
 
 def wait_and_insert_item(driver,value,iconClass):
-    wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-inserter__toggle.has-icon')
+    try:
+        wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-button-block-appender')
+    except:    
+        wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-inserter__toggle.has-icon')
+    
     wait_and_send_keys(driver, By.CLASS_NAME, 'components-search-control__input', value)
     wait_and_click(driver, By.CLASS_NAME, iconClass)
 
 def container_columns(driver,index):
+
+    try:
+        wait_and_click(driver,By.XPATH,'//ul[@class="block-editor-block-breadcrumb"]//button[text()="Page"]')
+    except:
+        print("Es primer contenedor")
+
     wait_and_insert_item(driver,"container", 'components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-container')
     buttons = driver.find_elements(By.XPATH, '//ul[@class="block-editor-block-variation-picker__variations"]/li/button')
     # Seleccionar el botón en una posición específica (por ejemplo, el segundo botón)
@@ -125,16 +170,13 @@ image_cover(driver)
 insert_title(driver,'Este es un titulo de ejemplo', 0)
 insert_title(driver,'Este es un H2', 1)
 
+#Inserta un boton
+insert_button(driver,'Contactanos','tel: 111111111',1)
 
-# Buttons
-# components-button block-editor-block-types-list__item editor-block-list-item-buttons
-# block-editor-rich-text__editable wp-block-button__link wp-element-button rich-text
-# block-editor-rich-text__editable wp-block-button__link wp-element-button rich-text
-# aria-label="Change items justification"
-# btns = driver.find_elements(By.XPATH,'//div[@aria-label="Change level"]//button')
-# btn = btns[1]
-# aria-label="Link"
-# block-editor-url-input__input
+#creacion del contenedor
+container_columns(driver,0)
+
+insert_title(driver,'Este es un H2', 1)
 
 time.sleep(60)
 driver.quit()
