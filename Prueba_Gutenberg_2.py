@@ -129,6 +129,15 @@ def container_columns(driver,index):
     else:
         print("La posición está fuera de rango")
 
+def insert_paragraph(driver,text):
+    # components-button block-editor-block-types-list__item editor-block-list-item-paragraph
+
+    wait_and_insert_item(driver,'Paragraph','components-button.block-editor-block-types-list__item.editor-block-list-item-paragraph')
+    wait_and_send_keys(driver,By.CLASS_NAME,'block-editor-rich-text__editable.block-editor-block-list__block.wp-block.is-selected.wp-block-paragraph.rich-text',text)
+    # Insertar párrafo - sigue el mismo patrón
+    # wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-block-types-list__item.editor-block-list-item-paragraph')
+    # wait_and_send_keys(driver, By.XPATH, '/html/body/div[1]/div[2]/div[2]/div[1]/div[2]/div[1]/div/div[1]/div[1]/div[2]/div[3]/div[3]/div[3]/div/div[2]/div[2]/div/div/div/div/p', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.')
+
 options = webdriver.ChromeOptions()
 options.service_args = ['--executable_path=C:\driver_chrome\chromedriver.exe']
 
@@ -154,9 +163,8 @@ insert_image('https://magianegrachicago.com/wp-content/uploads/2023/07/amarres-e
 #Vuelve la imagen insertada en cover
 image_cover(driver)
 
-#Inserta un boton
-insert_button(driver,'Contactanos','tel: 111111111',1)
-insert_button(driver,'otro boton','tel: 666666666',1)
+insert_paragraph(driver,'LOREM IMPSUM DE LOCOS')
+
 
 time.sleep(60)
 driver.quit()

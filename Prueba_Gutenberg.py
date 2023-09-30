@@ -74,6 +74,18 @@ def insert_title(driver,title,size):
     last_Btn = Btns[0]
     last_Btn.click()
 
+def insert_paragraph(driver,text):
+
+    wait_and_insert_item(driver,'Paragraph','components-button.block-editor-block-types-list__item.editor-block-list-item-paragraph')
+    wait_and_send_keys(driver,By.CLASS_NAME,'block-editor-rich-text__editable.block-editor-block-list__block.wp-block.is-selected.wp-block-paragraph.rich-text',text)
+    wait_and_send_keys(driver,By.CLASS_NAME,'block-editor-rich-text__editable.block-editor-block-list__block.wp-block.is-selected.wp-block-paragraph.rich-text',Keys.ESCAPE)
+    wait_and_click(driver,By.CLASS_NAME,'components-button.block-selection-button_select-button')
+
+    wait_and_click(driver,By.CLASS_NAME,'components-dropdown.components-dropdown-menu.block-editor-block-settings-menu')
+    Btns = driver.find_elements(By.CSS_SELECTOR,'.components-menu-group button')
+    last_Btn = Btns[0]
+    last_Btn.click()
+
 def insert_button(driver,text,url,align):
     wait_and_insert_item(driver,"Buttons","components-button.block-editor-block-types-list__item.editor-block-list-item-buttons")
     time.sleep(1)
@@ -119,9 +131,9 @@ def wait_and_send_keys(driver, by, value, keys):
 
 def wait_and_insert_item(driver,value,iconClass):
     try:
-        wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-button-block-appender')
-    except:    
         wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-inserter__toggle.has-icon')
+    except:    
+        wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-button-block-appender')
     
     wait_and_send_keys(driver, By.CLASS_NAME, 'components-search-control__input', value)
     wait_and_click(driver, By.CLASS_NAME, iconClass)
@@ -173,18 +185,24 @@ insert_title(driver,'Este es un H2', 1)
 #Inserta un boton
 insert_button(driver,'Contactanos','tel: 111111111',1)
 
-#creacion del contenedor
+#creacion del contenedor doble
 container_columns(driver,0)
 
-insert_title(driver,'Este es un H2', 1)
+insert_title(driver,'Este es un H2 DE OTRA SECCION', 1)
+
+insert_paragraph(driver,'LOREM IMPSUM DE LOCOS')
 
 time.sleep(60)
 driver.quit()
 
 
-# # Insertar párrafo - sigue el mismo patrón
-# wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-block-types-list__item.editor-block-list-item-paragraph')
-# wait_and_send_keys(driver, By.XPATH, '/html/body/div[1]/div[2]/div[2]/div[1]/div[2]/div[1]/div/div[1]/div[1]/div[2]/div[3]/div[3]/div[3]/div/div[2]/div[2]/div/div/div/div/p', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.')
+# COntenedor simplre
+# COntenedor simplre
+# Condenido x
+# Ir al padre del contenedor
+# Agregar con mas Negro, nuevo contenedor simple
+
+
 
 # Continuar con el flujo del script
 # ...
