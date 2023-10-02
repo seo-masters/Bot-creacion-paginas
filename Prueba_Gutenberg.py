@@ -141,9 +141,57 @@ def wait_and_insert_item(driver,value,iconClass):
 def container_columns(driver,index):
 
     try:
+
+        wait_and_click(driver,By.CLASS_NAME,'components-button.edit-post-header-toolbar__document-overview-toggle.has-icon')
+
+        options = driver.find_elements(By.CLASS_NAME, "components-button.block-editor-list-view-block__menu.components-dropdown-menu__toggle.has-icon")
+        ultimo_elemento = options[-1]
+        ultimo_elemento.click()
+
+        Btns = driver.find_elements(By.CSS_SELECTOR,'.components-dropdown-menu__menu.no-icons button')
+        last_Btn = Btns[4]
+        last_Btn.click()
+
+
+
+        # selected = driver.find_element(By.CLASS_NAME,'block-editor-list-view-leaf.is-selected.is-first-selected.is-last-selected')
+        # optionSelected = selected.find_element(By.CLASS_NAME,'components-button.block-editor-list-view-block__menu.components-dropdown-menu__toggle.has-icon')
+        # optionSelected.click()
+
+        # time.sleep(2)
+
+        # Btns = driver.find_elements(By.CSS_SELECTOR,'.components-dropdown-menu__menu.no-icons button')
+        # last_Btn = Btns[4]
+        # last_Btn.click()
+
+        # time.sleep(2)
+
+        wait_and_click(driver,By.CLASS_NAME,'components-button.edit-post-header-toolbar__document-overview-toggle.is-pressed.has-icon')
+        
+    except Exception as e:
+        print(e)
+
+    wait_and_insert_item(driver,"container", 'components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-container')
+    buttons = driver.find_elements(By.XPATH, '//ul[@class="block-editor-block-variation-picker__variations"]/li/button')
+    # Seleccionar el botón en una posición específica (por ejemplo, el segundo botón)
+    if 0 <= index < len(buttons):
+        buttons[index].click()
+    else:
+        print("La posición está fuera de rango")
+
+def container_father(driver,index):
+    try:
         wait_and_click(driver,By.XPATH,'//ul[@class="block-editor-block-breadcrumb"]//button[text()="Page"]')
     except:
         print("Es primer contenedor")
+
+    wait_and_insert_item(driver,"container", 'components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-container')
+    buttons = driver.find_elements(By.XPATH, '//ul[@class="block-editor-block-variation-picker__variations"]/li/button')
+    # Seleccionar el botón en una posición específica (por ejemplo, el segundo botón)
+    if 0 <= index < len(buttons):
+        buttons[index].click()
+    else:
+        print("La posición está fuera de rango")
 
     wait_and_insert_item(driver,"container", 'components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-container')
     buttons = driver.find_elements(By.XPATH, '//ul[@class="block-editor-block-variation-picker__variations"]/li/button')
@@ -169,30 +217,35 @@ wait_and_click(driver, By.ID, 'wp-submit')
 wait_and_click(driver, By.ID, 'menu-pages')
 wait_and_click(driver, By.CLASS_NAME, 'page-title-action')
 
-#creacion del contenedor
-container_columns(driver,0)
+# #creacion del contenedor
+# container_father(driver,0)
 
-#Insertar la imagen
-insert_image('https://magianegrachicago.com/wp-content/uploads/2023/07/amarres-en-chicago-efectivos-amarres-de-amor-chicago.jpg')
+# #Insertar la imagen
+# insert_image('https://magianegrachicago.com/wp-content/uploads/2023/07/amarres-en-chicago-efectivos-amarres-de-amor-chicago.jpg')
 
-#Vuelve la imagen insertada en cover
-image_cover(driver)
+# #Vuelve la imagen insertada en cover
+# image_cover(driver)
 
 # Inserta un titulo de Tamaño H1
-insert_title(driver,'Este es un titulo de ejemplo', 0)
-insert_title(driver,'Este es un H2', 1)
+# insert_title(driver,'Este es un titulo de ejemplo', 0)
+# insert_title(driver,'Este es un H2', 1)
+# insert_title(driver,'Este es el titulo para el video', 1)
 
-#Inserta un boton
-insert_button(driver,'Contactanos','tel: 111111111',1)
+# #Inserta un boton
+# insert_button(driver,'Contactanos','tel: 111111111',1)
+# insert_button(driver,'Llmanos','tel: 111111111',1)
 
 #creacion del contenedor doble
-container_columns(driver,0)
+container_father(driver,0)
 
 insert_title(driver,'Este es un H2 DE OTRA SECCION', 1)
 
-insert_paragraph(driver,'LOREM IMPSUM DE LOCOS')
+# insert_paragraph(driver,'MENSAJE PARA EL TEXTO DEL VIDEO')
 
-time.sleep(60)
+container_columns(driver,0)
+
+
+time.sleep(600)
 driver.quit()
 
 
@@ -201,12 +254,3 @@ driver.quit()
 # Condenido x
 # Ir al padre del contenedor
 # Agregar con mas Negro, nuevo contenedor simple
-
-
-
-# Continuar con el flujo del script
-# ...
-
-# Cerrar el navegador al finalizar
- 
-# components-button block-editor-media-placeholder__button is-tertiary
