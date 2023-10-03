@@ -6,10 +6,10 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 
 #Elementos:
-def insert_image(url):
+def insert_image(url,col):
     time.sleep(2)
    
-    wait_and_insert_item(driver,'Image','components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-image')
+    wait_and_insert_item(driver,'Image','components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-image',col)
 
     wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-media-placeholder__button.is-tertiary')
     wait_and_send_keys(driver, By.CLASS_NAME, 'block-editor-media-placeholder__url-input-field', url)
@@ -40,8 +40,8 @@ def image_cover(driver):
     last_Btn = Btns[-1]
     last_Btn.click()
 
-def insert_title(driver,title,size):
-    wait_and_insert_item(driver,"Heading","components-button.block-editor-block-types-list__item.editor-block-list-item-heading")
+def insert_title(driver,title,size,col):
+    wait_and_insert_item(driver,"Heading","components-button.block-editor-block-types-list__item.editor-block-list-item-heading",col)
     time.sleep(1)
     #cambia el texto del interior
     wait_and_send_keys(driver,By.CLASS_NAME,'block-editor-rich-text__editable.block-editor-block-list__block.wp-block.is-selected.wp-block-heading.rich-text', title)
@@ -74,9 +74,9 @@ def insert_title(driver,title,size):
     last_Btn = Btns[0]
     last_Btn.click()
 
-def insert_paragraph(driver,text):
+def insert_paragraph(driver,text,col):
 
-    wait_and_insert_item(driver,'Paragraph','components-button.block-editor-block-types-list__item.editor-block-list-item-paragraph')
+    wait_and_insert_item(driver,'Paragraph','components-button.block-editor-block-types-list__item.editor-block-list-item-paragraph',col)
     wait_and_send_keys(driver,By.CLASS_NAME,'block-editor-rich-text__editable.block-editor-block-list__block.wp-block.is-selected.wp-block-paragraph.rich-text',text)
     wait_and_send_keys(driver,By.CLASS_NAME,'block-editor-rich-text__editable.block-editor-block-list__block.wp-block.is-selected.wp-block-paragraph.rich-text',Keys.ESCAPE)
     wait_and_click(driver,By.CLASS_NAME,'components-button.block-selection-button_select-button')
@@ -86,8 +86,8 @@ def insert_paragraph(driver,text):
     last_Btn = Btns[0]
     last_Btn.click()
 
-def insert_button(driver,text,url,align):
-    wait_and_insert_item(driver,"Buttons","components-button.block-editor-block-types-list__item.editor-block-list-item-buttons")
+def insert_button(driver,text,url,align,col):
+    wait_and_insert_item(driver,"Buttons","components-button.block-editor-block-types-list__item.editor-block-list-item-buttons",col)
     time.sleep(1)
 
     #cambia el texto del interior
@@ -129,63 +129,70 @@ def wait_and_send_keys(driver, by, value, keys):
     element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((by, value)))
     element.send_keys(keys)
 
-def wait_and_insert_item(driver,value,iconClass):
-    try:
-        wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-inserter__toggle.has-icon')
-    except:    
-        wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-button-block-appender')
-    
+def wait_and_insert_item(driver,value,iconClass,col):
+
+    if col:
+        try:
+            wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-inserter__toggle.has-icon')
+        except Exception as e:    
+            print(e)
+    else:
+        try:
+            wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-button-block-appender')
+        except:    
+            wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-inserter__toggle.has-icon')
+        
     wait_and_send_keys(driver, By.CLASS_NAME, 'components-search-control__input', value)
     wait_and_click(driver, By.CLASS_NAME, iconClass)
 
-def container_columns(driver,index):
+# def container_columns(driver,index):
 
-    try:
+#     try:
 
-        wait_and_click(driver,By.CLASS_NAME,'components-button.edit-post-header-toolbar__document-overview-toggle.has-icon')
+#         wait_and_click(driver,By.CLASS_NAME,'components-button.edit-post-header-toolbar__document-overview-toggle.has-icon')
 
-        options = driver.find_elements(By.CLASS_NAME, "components-button.block-editor-list-view-block__menu.components-dropdown-menu__toggle.has-icon")
-        ultimo_elemento = options[-1]
-        ultimo_elemento.click()
+#         options = driver.find_elements(By.CLASS_NAME, "components-button.block-editor-list-view-block__menu.components-dropdown-menu__toggle.has-icon")
+#         ultimo_elemento = options[-1]
+#         ultimo_elemento.click()
 
-        Btns = driver.find_elements(By.CSS_SELECTOR,'.components-dropdown-menu__menu.no-icons button')
-        last_Btn = Btns[4]
-        last_Btn.click()
+#         Btns = driver.find_elements(By.CSS_SELECTOR,'.components-dropdown-menu__menu.no-icons button')
+#         last_Btn = Btns[4]
+#         last_Btn.click()
 
 
 
-        # selected = driver.find_element(By.CLASS_NAME,'block-editor-list-view-leaf.is-selected.is-first-selected.is-last-selected')
-        # optionSelected = selected.find_element(By.CLASS_NAME,'components-button.block-editor-list-view-block__menu.components-dropdown-menu__toggle.has-icon')
-        # optionSelected.click()
+#         # selected = driver.find_element(By.CLASS_NAME,'block-editor-list-view-leaf.is-selected.is-first-selected.is-last-selected')
+#         # optionSelected = selected.find_element(By.CLASS_NAME,'components-button.block-editor-list-view-block__menu.components-dropdown-menu__toggle.has-icon')
+#         # optionSelected.click()
 
-        # time.sleep(2)
+#         # time.sleep(2)
 
-        # Btns = driver.find_elements(By.CSS_SELECTOR,'.components-dropdown-menu__menu.no-icons button')
-        # last_Btn = Btns[4]
-        # last_Btn.click()
+#         # Btns = driver.find_elements(By.CSS_SELECTOR,'.components-dropdown-menu__menu.no-icons button')
+#         # last_Btn = Btns[4]
+#         # last_Btn.click()
 
-        # time.sleep(2)
+#         # time.sleep(2)
 
-        wait_and_click(driver,By.CLASS_NAME,'components-button.edit-post-header-toolbar__document-overview-toggle.is-pressed.has-icon')
+#         wait_and_click(driver,By.CLASS_NAME,'components-button.edit-post-header-toolbar__document-overview-toggle.is-pressed.has-icon')
         
-    except Exception as e:
-        print(e)
+#     except Exception as e:
+#         print(e)
 
-    wait_and_insert_item(driver,"container", 'components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-container')
-    buttons = driver.find_elements(By.XPATH, '//ul[@class="block-editor-block-variation-picker__variations"]/li/button')
-    # Seleccionar el botón en una posición específica (por ejemplo, el segundo botón)
-    if 0 <= index < len(buttons):
-        buttons[index].click()
-    else:
-        print("La posición está fuera de rango")
+#     wait_and_insert_item(driver,"container", 'components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-container')
+#     buttons = driver.find_elements(By.XPATH, '//ul[@class="block-editor-block-variation-picker__variations"]/li/button')
+#     # Seleccionar el botón en una posición específica (por ejemplo, el segundo botón)
+#     if 0 <= index < len(buttons):
+#         buttons[index].click()
+#     else:
+#         print("La posición está fuera de rango")
 
-def container_father(driver,index):
+def container_father(driver,index,col):
     try:
         wait_and_click(driver,By.XPATH,'//ul[@class="block-editor-block-breadcrumb"]//button[text()="Page"]')
     except:
         print("Es primer contenedor")
 
-    wait_and_insert_item(driver,"container", 'components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-container')
+    wait_and_insert_item(driver,"container", 'components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-container',col)
     buttons = driver.find_elements(By.XPATH, '//ul[@class="block-editor-block-variation-picker__variations"]/li/button')
     # Seleccionar el botón en una posición específica (por ejemplo, el segundo botón)
     if 0 <= index < len(buttons):
@@ -193,13 +200,57 @@ def container_father(driver,index):
     else:
         print("La posición está fuera de rango")
 
-    wait_and_insert_item(driver,"container", 'components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-container')
     buttons = driver.find_elements(By.XPATH, '//ul[@class="block-editor-block-variation-picker__variations"]/li/button')
     # Seleccionar el botón en una posición específica (por ejemplo, el segundo botón)
     if 0 <= index < len(buttons):
         buttons[index].click()
     else:
         print("La posición está fuera de rango")
+
+# def container_father_columns(driver):
+#     try:
+#         wait_and_click(driver,By.XPATH,'//ul[@class="block-editor-block-breadcrumb"]//button[text()="Page"]')
+#     except:
+#         print("Es primer contenedor")
+
+#     wait_and_insert_item(driver,"container", 'components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-container')
+#     buttons = driver.find_elements(By.XPATH, '//ul[@class="block-editor-block-variation-picker__variations"]/li/button')
+#     # Seleccionar el botón en una posición específica (por ejemplo, el segundo botón)
+#     if 0 <= 1 < len(buttons):
+#         buttons[1].click()
+#     else:
+#         print("La posición está fuera de rango")
+
+#     buttons = driver.find_elements(By.XPATH, '//ul[@class="block-editor-block-variation-picker__variations"]/li/button')
+#     # Seleccionar el botón en una posición específica (por ejemplo, el segundo botón)
+#     if 0 <= 1 < len(buttons):
+#         buttons[1].click()
+#     else:
+#         print("La posición está fuera de rango")
+
+#     wait_and_click(driver,By.CLASS_NAME,'components-button.edit-post-header-toolbar__document-overview-toggle.has-icon')
+
+
+#     try:
+#         elements = driver.find_element(By.CLASS_NAME,'block-editor-list-view-leaf.is-selected.is-first-selected.is-last-selected.is-branch-selected')
+#         btn = elements.find_element(By.CLASS_NAME,'block-editor-list-view__expander')
+#         btn.send_keys(Keys.ENTER)
+
+#     except Exception as e:
+#         print('Se hizo click alv ',e)
+#     # document.querySelector("span.block-editor-list-view__expander").click()
+
+
+#     # containers = driver.find_element(By.CLASS_NAME,'block-editor-block-list__block.wp-block.uagb-container-has-children.uagb-editor-preview-mode-desktop.alignfull.uagb-is-root-container.is-selected.wp-block-uagb-container')
+#     # container = containers.find_elements(By.CLASS_NAME,'block-editor-inner-blocks')
+#     # ultimo_div = container[1]
+#     # ultimo_div.click()
+
+#     # wait_and_click(driver,By.CLASS_NAME,'components-dropdown.components-dropdown-menu.block-editor-block-settings-menu')
+#     # Btns = driver.find_elements(By.CSS_SELECTOR,'.components-menu-group button')
+#     # last_Btn = Btns[-1]
+#     # last_Btn.click()
+
 
 options = webdriver.ChromeOptions()
 options.service_args = ['--executable_path=C:\driver_chrome\chromedriver.exe']
@@ -227,7 +278,7 @@ wait_and_click(driver, By.CLASS_NAME, 'page-title-action')
 # image_cover(driver)
 
 # Inserta un titulo de Tamaño H1
-# insert_title(driver,'Este es un titulo de ejemplo', 0)
+# insert_title(driver,'Titulo para la demostracion', 0)
 # insert_title(driver,'Este es un H2', 1)
 # insert_title(driver,'Este es el titulo para el video', 1)
 
@@ -236,13 +287,15 @@ wait_and_click(driver, By.CLASS_NAME, 'page-title-action')
 # insert_button(driver,'Llmanos','tel: 111111111',1)
 
 #creacion del contenedor doble
-container_father(driver,0)
+container_father(driver,1,False)
 
-insert_title(driver,'Este es un H2 DE OTRA SECCION', 1)
+insert_title(driver,'Este es un H2 DE OTRA SECCION', 1,False)
+insert_button(driver,'anyway','tel:1111111',1,True)
 
+insert_image('https://magianegrachicago.com/wp-content/uploads/2023/07/amarres-en-chicago-efectivos-amarres-de-amor-chicago.jpg',False)
 # insert_paragraph(driver,'MENSAJE PARA EL TEXTO DEL VIDEO')
 
-container_columns(driver,0)
+# container_father_columns(driver)
 
 
 time.sleep(600)
