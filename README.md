@@ -33,17 +33,46 @@ El código Python se organiza en una serie de funciones, cada una con un propós
 
 Esta función desplaza el contenido hacia abajo en la página web.
 
+- `driver` : Recibe el obtejo driver generado con el driver de chrome 
+
 ### `insert_image(url, col, cover)`
 
 Inserta una imagen en la página web con la URL especificada. Puede especificar si la imagen debe ser una portada (`cover`) y la columna (`col`) en la que se debe colocar.
+
+- `url` : URL de la imagen que se va a ingresa, es una imagen subida desde internet
+
+- `col` : Indica si se debe ingresar el objeto en la columna actual
+    - ```True```: Ingresa el texto debajo del ultimo item
+    - ```False```: Ingresa el item en el primer contenedor que encuentre vacio
+
+- `cover` : Creacion de la imagen a tipo cover
+    - ```True```: Vuelve la imagen a `cover`
+    - ```False```: Deja la imagen sin alterarla 
 
 ### `image_cover(driver)`
 
 Convierte una imagen en una portada, permitiendo ajustar su diseño.
 
+- `driver` : Recibe el obtejo driver generado con el driver de chrome 
+
 ### `insert_title(driver, title, size, col)`
 
 Inserta un título en la página web con el texto especificado, tamaño (`size`), y columna (`col`) determinados.
+
+- `driver` : Recibe el obtejo driver generado con el driver de chrome 
+
+- `title` : El text que se va a generar como titulo
+
+- `size` : Indica el tipo de titulo
+    - `H1` -> `0` 
+    - `H2` -> `1` 
+    - `H3` -> `2` 
+    - `H4` -> `3` 
+    - `H5` -> `4` 
+
+- `col` : Indica si se debe ingresar el objeto en la columna actual
+    - ```True```: Ingresa el texto debajo del ultimo item
+    - ```False```: Ingresa el item en el primer contenedor que encuentre vacio
 
 ### `insert_paragraph(driver, text, col)`
 
