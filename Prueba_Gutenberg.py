@@ -222,7 +222,6 @@ wait_and_click(driver, By.ID, 'wp-submit')
 wait_and_click(driver, By.ID, 'menu-pages')
 wait_and_click(driver, By.CLASS_NAME, 'page-title-action')
 
-
 # Seccion 1
 
 container_father(driver,0,False)
@@ -343,7 +342,6 @@ try:
 except:
     print('error')
 
-
 # Seccion 13
 
 container_father(driver,1,False)
@@ -387,7 +385,5 @@ try:
 except:
     print('error')
 
-
-
-time.sleep(600)
+time.sleep(60)
 driver.quit()

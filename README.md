@@ -1,51 +1,83 @@
-# Bot Creación Página
+# Documentación Bot creacion paginas
 
-## Resumen
+Este documento proporciona una descripción y guía de uso para el código Python que actúa como un bot automatizado utilizando Selenium para interactuar con un sitio web.
 
-Este código es un script que automatiza la creación de páginas web utilizando Selenium. Realiza diversas acciones como la inserción de imágenes, configuración de propiedades de imágenes y la inserción de títulos en la página.
+## Descripción
+
+El código Python se utiliza para automatizar la interacción con un sitio web utilizando Selenium. Realiza varias acciones, como la inserción de imágenes, títulos, párrafos, botones y contenedores en una página web de WordPress. El código se divide en funciones para realizar tareas específicas.
+
+## Requisitos
+
+Asegúrate de cumplir con los siguientes requisitos antes de ejecutar el código:
+
+- Tener instalado Python en tu sistema.
+- Tener instalada la biblioteca Selenium.
+- Tener el controlador de Chrome (Chromedriver) instalado en tu sistema y configurado correctamente.
 
 ## Uso
 
-Para utilizar este script, sigue estos pasos:
+1. Iniciar sesión en el sitio web de WordPress.
+2. Navegar a la sección de páginas.
+3. Crear una nueva página o editar una existente.
+4. Ejecutar el código Python proporcionado para interactuar con la página web.
 
-### 1. Instala las bibliotecas necesarias:
+## Funciones
 
-    pip install selenium
+El código Python se organiza en una serie de funciones, cada una con un propósito específico. Aquí se describen algunas de las funciones principales:
 
-Configura el path del controlador de Selenium en la variable options.service_args en la sección de opciones de Chrome.
+### `scroll_down(driver)`
 
-Ejecuta el script:
+Esta función desplaza el contenido hacia abajo en la página web.
 
-    python main.py
+### `insert_image(url, col, cover)`
 
-## Estructura del Código
-El código se divide en las siguientes secciones principales:
+Inserta una imagen en la página web con la URL especificada. Puede especificar si la imagen debe ser una portada (`cover`) y la columna (`col`) en la que se debe colocar.
 
-### 1. Importación de Bibliotecas
-Se importan las bibliotecas necesarias, como Selenium, para la automatización del navegador web.
+### `image_cover(driver)`
 
-### 2. Elementos
-Se definen funciones para realizar acciones específicas, como la inserción de imágenes, configuración de propiedades de imágenes, inserción de títulos y más.
+Convierte una imagen en una portada, permitiendo ajustar su diseño.
 
-### 3. Configuración de Selenium
-Se configuran las opciones de Selenium y se inicia el navegador web Chrome.
+### `insert_title(driver, title, size, col)`
 
-### 4. Inicio de Sesión
-Se realiza el inicio de sesión en un sitio web específico utilizando Selenium.
+Inserta un título en la página web con el texto especificado, tamaño (`size`), y columna (`col`) determinados.
 
-### 5. Creación de Contenido
-Se utilizan las funciones definidas en la sección de "Elementos" para crear contenido en la página web, incluyendo la inserción de imágenes y títulos.
+### `insert_paragraph(driver, text, col)`
 
-### 6. Finalización
-El script espera durante 60 segundos (para permitir la interacción manual si es necesario) y luego cierra el navegador.
+Inserta un párrafo en la página web con el texto especificado y en la columna (`col`) determinada.
 
-## Diagrama
-No se proporciona un diagrama de flujo en este momento.
+### `insert_button(driver, text, url, align, col)`
 
-## Notas Adicionales
-Asegúrate de tener instalado el controlador de Chrome (chromedriver.exe) en la ubicación especificada en options.service_args.
-Es importante mantener seguras las credenciales de inicio de sesión.
-## Conclusiones
-Este script es útil para automatizar tareas relacionadas con la creación de contenido web utilizando Selenium. Puede ser personalizado para adaptarse a diferentes sitios web y flujos de trabajo.
+Inserta un botón en la página web con el texto, URL, alineación (`align`) y columna (`col`) especificados.
 
-¡Disfruta utilizando este script para simplificar la creación de páginas web automatizadas!
+### `container_father(driver, index, col)`
+
+Crea un contenedor en la página web y permite seleccionar una variante para el contenedor.
+
+### `add_column(driver, col)`
+
+Añade una columna al contenedor existente en la página web.
+
+### `wait_and_click(driver, by, value)`
+
+Espera a que un elemento sea clickeable y luego lo hace.
+
+### `wait_and_send_keys(driver, by, value, keys)`
+
+Espera a que un elemento esté presente y luego envía teclas.
+
+### `wait_and_insert_item(driver, value, iconClass, col)`
+
+Inserta un elemento en la página web y espera a que esté presente antes de hacerlo.
+
+## Ejecución
+
+Para ejecutar el código, sigue los pasos a continuación:
+
+1. Asegúrate de tener Python y las bibliotecas necesarias instaladas.
+2. Configura el controlador de Chrome (Chromedriver) en la ubicación correcta.
+3. Modifica el código según tus necesidades, especialmente las URL y el contenido.
+4. Ejecuta el script Python.
+
+## Notas
+
+- Este código se ha diseñado específicamente para interactuar con un sitio web de WordPress. Asegúrate de que la estructura del sitio web y los selectores de elementos sean compatibles con tu sitio.
