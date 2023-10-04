@@ -21,6 +21,10 @@ Asegúrate de cumplir con los siguientes requisitos antes de ejecutar el código
 3. Crear una nueva página o editar una existente.
 4. Ejecutar el código Python proporcionado para interactuar con la página web.
 
+## Diagrama
+
+![Diagrama de Flujo](Diagrama.png)
+
 ## Funciones
 
 El código Python se organiza en una serie de funciones, cada una con un propósito específico. Aquí se describen algunas de las funciones principales:
