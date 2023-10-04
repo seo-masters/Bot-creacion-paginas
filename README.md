@@ -78,29 +78,97 @@ Inserta un título en la página web con el texto especificado, tamaño (`size`)
 
 Inserta un párrafo en la página web con el texto especificado y en la columna (`col`) determinada.
 
+- `driver` : Recibe el obtejo driver generado con el driver de chrome 
+
+- `text` : Ingresa el parrafo que se va a insertar
+
+- `col` : Indica si se debe ingresar el objeto en la columna actual
+    - ```True```: Ingresa el texto debajo del ultimo item
+    - ```False```: Ingresa el item en el primer contenedor que encuentre vacio
+
 ### `insert_button(driver, text, url, align, col)`
 
 Inserta un botón en la página web con el texto, URL, alineación (`align`) y columna (`col`) especificados.
+
+- `driver` : Recibe el obtejo driver generado con el driver de chrome 
+
+- `text` : Ingresa el titulo que se va a insertar
+
+- `url` : Hiperenlace para el boton
+    - `Left` -> `0` 
+    - `Center` -> `1` 
+    - `Right` -> `2` 
+
+- `col` : Indica si se debe ingresar el objeto en la columna actual
+    - ```True```: Ingresa el texto debajo del ultimo item
+    - ```False```: Ingresa el item en el primer contenedor que encuentre vacio
 
 ### `container_father(driver, index, col)`
 
 Crea un contenedor en la página web y permite seleccionar una variante para el contenedor.
 
+- `driver` : Recibe el obtejo driver generado con el driver de chrome 
+
+- `index` : Indica segun las opciones un formato para el contenedor
+    - `1 col` -> `0` 
+    - `2 col` -> `1` 
+    - `3 col` -> `2` 
+    - `4 col` -> `3` 
+
 ### `add_column(driver, col)`
 
 Añade una columna al contenedor existente en la página web.
+
+- `driver` : Recibe el obtejo driver generado con el driver de chrome 
+
+- `col` : Indica si se debe ingresar el objeto en la columna actual
+    - ```True```: Ingresa el texto debajo del ultimo item
+    - ```False```: Ingresa el item en el primer contenedor que encuentre vacio
 
 ### `wait_and_click(driver, by, value)`
 
 Espera a que un elemento sea clickeable y luego lo hace.
 
+- `driver` : Recibe el obtejo driver generado con el driver de chrome 
+
+- `by` : Ingresa el tipo por el cual va a buscar `selenium`, por ejemplo
+    ```python
+        By.CLASS_NAME
+    ```
+
+- `value` : El elemento que debe buscar
+
 ### `wait_and_send_keys(driver, by, value, keys)`
 
 Espera a que un elemento esté presente y luego envía teclas.
 
+- `driver` : Recibe el obtejo driver generado con el driver de chrome 
+
+- `by` : Ingresa el tipo por el cual va a buscar `selenium`, por ejemplo
+    ```python
+        By.CLASS_NAME
+    ```
+
+- `value` : El elemento que debe buscar
+
+- `keys` : Ingresa la tecla que va a ingresar `selenium`, por ejemplo
+    ```python
+        Keys.ENTER
+    ```
+
 ### `wait_and_insert_item(driver, value, iconClass, col)`
 
 Inserta un elemento en la página web y espera a que esté presente antes de hacerlo.
+
+- `driver` : Recibe el obtejo driver generado con el driver de chrome 
+
+- `value` : El elemento que debe buscar
+
+- `iconClass` : la clase del boton del icono que va a dar click
+
+- `col` : Indica si se debe ingresar el objeto en la columna actual
+    - ```True```: Ingresa el texto debajo del ultimo item
+    - ```False```: Ingresa el item en el primer contenedor que encuentre vacio
 
 ## Ejecución
 
