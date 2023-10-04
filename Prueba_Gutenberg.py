@@ -6,7 +6,18 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 
 #Elementos:
-def insert_image(url,col):
+def scroll_down(driver):
+    try:
+        # interface-navigable-region interface-interface-skeleton__content
+        contenedor_scroll = driver.find_element(By.CLASS_NAME,"editor-styles-wrapper.block-editor-writing-flow.ast-stacked-title-visibility")
+
+        # Desplazar el contenedor hasta el final
+        contenedor_scroll.send_keys(Keys.END)
+
+    except Exception as e:
+        print("No hay scroll", e)
+
+def insert_image(url,col,cover):
     time.sleep(2)
    
     wait_and_insert_item(driver,'Image','components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-image',col)
@@ -15,10 +26,19 @@ def insert_image(url,col):
     wait_and_send_keys(driver, By.CLASS_NAME, 'block-editor-media-placeholder__url-input-field', url)
     wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-media-placeholder__url-input-submit-button.has-icon')
 
+    if cover:
+        image_cover(driver)
+    else:
+        wait_and_click(driver,By.CLASS_NAME,'components-dropdown.components-dropdown-menu.block-editor-block-settings-menu')
+        Btns = driver.find_elements(By.CSS_SELECTOR,'.components-menu-group button')
+        last_Btn = Btns[0]
+        last_Btn.click()
+
 def image_cover(driver):
     time.sleep(2)
     #Vuelve el tiem una imagen
     wait_and_click(driver,By.CLASS_NAME,'components-dropdown.components-dropdown-menu.block-editor-block-switcher')
+    time.sleep(1)
     wait_and_click(driver,By.CLASS_NAME,'components-button.components-menu-item__button.editor-block-list-item-image')
     time.sleep(2)
     #Le da la propiedad cover
@@ -68,6 +88,8 @@ def insert_title(driver,title,size,col):
     align = driver.find_elements(By.XPATH,'//div[@aria-label="Align text"]//button')
     center = align[1]
     center.click()
+
+    time.sleep(1)
     # Selecciona el primer icono de da opciones generales
     wait_and_click(driver,By.CLASS_NAME,'components-dropdown.components-dropdown-menu.block-editor-block-settings-menu')
     Btns = driver.find_elements(By.CSS_SELECTOR,'.components-menu-group button')
@@ -80,7 +102,6 @@ def insert_paragraph(driver,text,col):
     wait_and_send_keys(driver,By.CLASS_NAME,'block-editor-rich-text__editable.block-editor-block-list__block.wp-block.is-selected.wp-block-paragraph.rich-text',text)
     wait_and_send_keys(driver,By.CLASS_NAME,'block-editor-rich-text__editable.block-editor-block-list__block.wp-block.is-selected.wp-block-paragraph.rich-text',Keys.ESCAPE)
     wait_and_click(driver,By.CLASS_NAME,'components-button.block-selection-button_select-button')
-
     wait_and_click(driver,By.CLASS_NAME,'components-dropdown.components-dropdown-menu.block-editor-block-settings-menu')
     Btns = driver.find_elements(By.CSS_SELECTOR,'.components-menu-group button')
     last_Btn = Btns[0]
@@ -131,8 +152,13 @@ def wait_and_send_keys(driver, by, value, keys):
 
 def wait_and_insert_item(driver,value,iconClass,col):
 
+    scroll_down(driver)
+
+    time.sleep(1)
+
     if col:
         try:
+
             wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-inserter__toggle.has-icon')
         except Exception as e:    
             print(e)
@@ -143,54 +169,17 @@ def wait_and_insert_item(driver,value,iconClass,col):
             wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-inserter__toggle.has-icon')
         
     wait_and_send_keys(driver, By.CLASS_NAME, 'components-search-control__input', value)
+    time.sleep(1)
     wait_and_click(driver, By.CLASS_NAME, iconClass)
 
-# def container_columns(driver,index):
-
-#     try:
-
-#         wait_and_click(driver,By.CLASS_NAME,'components-button.edit-post-header-toolbar__document-overview-toggle.has-icon')
-
-#         options = driver.find_elements(By.CLASS_NAME, "components-button.block-editor-list-view-block__menu.components-dropdown-menu__toggle.has-icon")
-#         ultimo_elemento = options[-1]
-#         ultimo_elemento.click()
-
-#         Btns = driver.find_elements(By.CSS_SELECTOR,'.components-dropdown-menu__menu.no-icons button')
-#         last_Btn = Btns[4]
-#         last_Btn.click()
-
-
-
-#         # selected = driver.find_element(By.CLASS_NAME,'block-editor-list-view-leaf.is-selected.is-first-selected.is-last-selected')
-#         # optionSelected = selected.find_element(By.CLASS_NAME,'components-button.block-editor-list-view-block__menu.components-dropdown-menu__toggle.has-icon')
-#         # optionSelected.click()
-
-#         # time.sleep(2)
-
-#         # Btns = driver.find_elements(By.CSS_SELECTOR,'.components-dropdown-menu__menu.no-icons button')
-#         # last_Btn = Btns[4]
-#         # last_Btn.click()
-
-#         # time.sleep(2)
-
-#         wait_and_click(driver,By.CLASS_NAME,'components-button.edit-post-header-toolbar__document-overview-toggle.is-pressed.has-icon')
-        
-#     except Exception as e:
-#         print(e)
-
-#     wait_and_insert_item(driver,"container", 'components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-container')
-#     buttons = driver.find_elements(By.XPATH, '//ul[@class="block-editor-block-variation-picker__variations"]/li/button')
-#     # Seleccionar el botón en una posición específica (por ejemplo, el segundo botón)
-#     if 0 <= index < len(buttons):
-#         buttons[index].click()
-#     else:
-#         print("La posición está fuera de rango")
-
 def container_father(driver,index,col):
+   
+
     try:
         wait_and_click(driver,By.XPATH,'//ul[@class="block-editor-block-breadcrumb"]//button[text()="Page"]')
+        scroll_down(driver)
     except:
-        print("Es primer contenedor")
+        print('Primer contenedior')
 
     wait_and_insert_item(driver,"container", 'components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-container',col)
     buttons = driver.find_elements(By.XPATH, '//ul[@class="block-editor-block-variation-picker__variations"]/li/button')
@@ -207,50 +196,15 @@ def container_father(driver,index,col):
     else:
         print("La posición está fuera de rango")
 
-# def container_father_columns(driver):
-#     try:
-#         wait_and_click(driver,By.XPATH,'//ul[@class="block-editor-block-breadcrumb"]//button[text()="Page"]')
-#     except:
-#         print("Es primer contenedor")
+def add_column(driver,col):
+    for _ in range(2):
+        #Elimina el contenido
+        wait_and_click(driver,By.CLASS_NAME,'components-dropdown.components-dropdown-menu.block-editor-block-settings-menu')
+        Btns = driver.find_elements(By.CSS_SELECTOR,'.components-menu-group button')
+        last_Btn = Btns[0]
+        last_Btn.click()
 
-#     wait_and_insert_item(driver,"container", 'components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-container')
-#     buttons = driver.find_elements(By.XPATH, '//ul[@class="block-editor-block-variation-picker__variations"]/li/button')
-#     # Seleccionar el botón en una posición específica (por ejemplo, el segundo botón)
-#     if 0 <= 1 < len(buttons):
-#         buttons[1].click()
-#     else:
-#         print("La posición está fuera de rango")
-
-#     buttons = driver.find_elements(By.XPATH, '//ul[@class="block-editor-block-variation-picker__variations"]/li/button')
-#     # Seleccionar el botón en una posición específica (por ejemplo, el segundo botón)
-#     if 0 <= 1 < len(buttons):
-#         buttons[1].click()
-#     else:
-#         print("La posición está fuera de rango")
-
-#     wait_and_click(driver,By.CLASS_NAME,'components-button.edit-post-header-toolbar__document-overview-toggle.has-icon')
-
-
-#     try:
-#         elements = driver.find_element(By.CLASS_NAME,'block-editor-list-view-leaf.is-selected.is-first-selected.is-last-selected.is-branch-selected')
-#         btn = elements.find_element(By.CLASS_NAME,'block-editor-list-view__expander')
-#         btn.send_keys(Keys.ENTER)
-
-#     except Exception as e:
-#         print('Se hizo click alv ',e)
-#     # document.querySelector("span.block-editor-list-view__expander").click()
-
-
-#     # containers = driver.find_element(By.CLASS_NAME,'block-editor-block-list__block.wp-block.uagb-container-has-children.uagb-editor-preview-mode-desktop.alignfull.uagb-is-root-container.is-selected.wp-block-uagb-container')
-#     # container = containers.find_elements(By.CLASS_NAME,'block-editor-inner-blocks')
-#     # ultimo_div = container[1]
-#     # ultimo_div.click()
-
-#     # wait_and_click(driver,By.CLASS_NAME,'components-dropdown.components-dropdown-menu.block-editor-block-settings-menu')
-#     # Btns = driver.find_elements(By.CSS_SELECTOR,'.components-menu-group button')
-#     # last_Btn = Btns[-1]
-#     # last_Btn.click()
-
+    wait_and_insert_item(driver,"container", 'components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-container',col)
 
 options = webdriver.ChromeOptions()
 options.service_args = ['--executable_path=C:\driver_chrome\chromedriver.exe']
@@ -268,42 +222,172 @@ wait_and_click(driver, By.ID, 'wp-submit')
 wait_and_click(driver, By.ID, 'menu-pages')
 wait_and_click(driver, By.CLASS_NAME, 'page-title-action')
 
-# #creacion del contenedor
-# container_father(driver,0)
 
-# #Insertar la imagen
-# insert_image('https://magianegrachicago.com/wp-content/uploads/2023/07/amarres-en-chicago-efectivos-amarres-de-amor-chicago.jpg')
+# Seccion 1
 
-# #Vuelve la imagen insertada en cover
-# image_cover(driver)
+container_father(driver,0,False)
 
-# Inserta un titulo de Tamaño H1
-# insert_title(driver,'Titulo para la demostracion', 0)
-# insert_title(driver,'Este es un H2', 1)
-# insert_title(driver,'Este es el titulo para el video', 1)
+insert_image('https://magianegrachicago.com/wp-content/uploads/2023/07/amarres-en-chicago-efectivos-amarres-de-amor-chicago.jpg',False,True)
 
-# #Inserta un boton
-# insert_button(driver,'Contactanos','tel: 111111111',1)
-# insert_button(driver,'Llmanos','tel: 111111111',1)
+insert_title(driver,'Titulo para la demostracion', 0, False)
+insert_title(driver,'Este es un H2', 1,False)
+insert_button(driver,'Boton','tel:1111111',1,False)
 
-#creacion del contenedor doble
+# Seccion 2
+
+container_father(driver,0,False)
+
+insert_title(driver,'Este es un H2', 1,False)
+insert_paragraph(driver,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',False)
+
+# Seccion 3
+
 container_father(driver,1,False)
 
 insert_title(driver,'Este es un H2 DE OTRA SECCION', 1,False)
 insert_button(driver,'anyway','tel:1111111',1,True)
 
-insert_image('https://magianegrachicago.com/wp-content/uploads/2023/07/amarres-en-chicago-efectivos-amarres-de-amor-chicago.jpg',False)
-# insert_paragraph(driver,'MENSAJE PARA EL TEXTO DEL VIDEO')
+insert_image('https://magianegrachicago.com/wp-content/uploads/2023/07/amarres-en-chicago-efectivos-amarres-de-amor-chicago.jpg',False,False)
 
-# container_father_columns(driver)
+# Seccion 4
+
+container_father(driver,0,False)
+
+insert_title(driver,'Este es un llamado de accion', 1,False)
+insert_paragraph(driver,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',False)
+insert_button(driver,'Boton','tel:1111111',1,False)
+
+# Seccion 5
+
+container_father(driver,0,False)
+insert_title(driver,'Servicios', 1,False)
+
+try:
+    for _ in range(2):
+        container_father(driver,2,False)
+
+        for _ in range(3):
+            insert_image('https://magianegrachicago.com/wp-content/uploads/2023/07/amarres-en-chicago-efectivos-amarres-de-amor-chicago.jpg',False,False)
+            time.sleep(1)
+            insert_title(driver,'Este es un H2 DE OTRA SECCION', 1,True)
+            time.sleep(1)
+            insert_paragraph(driver,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',True)
+except:
+    print('error')
+
+# Seccion 6
+
+container_father(driver,0,False)
+
+insert_title(driver,'Reseñas', 1,False)
+insert_paragraph(driver,'Lorem ipsum dolor sit amet.',True)
+
+# # Seccion 7
+
+container_father(driver,1,False)
+
+insert_title(driver,'Titulo muy ataractivo a la lectura', 1,False)
+insert_paragraph(driver,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',True)
+
+insert_title(driver,'Esto es un video', 1,False)
+
+# Seccion 8 
+
+container_father(driver,1,False)
+
+insert_title(driver,'Titulo para segundo llamado de accion', 1,False)
+
+insert_title(driver,'Titulo muy ataractivo a la lectura', 1,False)
+insert_button(driver,'Llamame','tel:1111111',1, True)
+
+# Seccion 9
+
+container_father(driver,1,False)
+
+insert_title(driver,'[Shortcode]', 1,False)
+
+insert_title(driver,'Otros servicios que ofrezco', 1,False)
+insert_title(driver,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 1,False)
+insert_button(driver,'Boton','tel:1111111',1,True)
+
+# Seccion 10
+
+container_father(driver,0,False)
+
+insert_title(driver,'Este es un llamado de accion', 1,False)
+insert_paragraph(driver,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',False)
+insert_button(driver,'Boton','tel:1111111',1,False)
+
+#Seccion 11
+
+container_father(driver,0,False)
+
+insert_title(driver,'Mapa', 1,False)
+insert_title(driver,'Mapa shortcode', 1,False)
+
+# Seccion 12
+
+container_father(driver,1,False)
+insert_title(driver,'Nuestros clientes satisfechos', 1,False)
+
+try:
+   
+    container_father(driver,2,False)
+
+    for _ in range(3):
+        insert_image('https://magianegrachicago.com/wp-content/uploads/2023/07/amarres-en-chicago-efectivos-amarres-de-amor-chicago.jpg',False,False)
+        time.sleep(1)
+        insert_paragraph(driver,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',True)
+        time.sleep(1)
+        insert_title(driver,'Personas nombre', 1,True)
+except:
+    print('error')
+
+
+# Seccion 13
+
+container_father(driver,1,False)
+insert_title(driver,'Mas recursos', 1,False)
+
+try:
+   
+    container_father(driver,2,False)
+
+    for _ in range(3):
+        insert_title(driver,'Titulo recursos', 1,True)
+        time.sleep(1)
+        insert_button(driver,'Boton','tel:1111111',1,True)
+        time.sleep(1)
+        insert_button(driver,'Boton','tel:1111111',1,True)
+        time.sleep(1)
+        insert_button(driver,'Boton','tel:1111111',1,True)
+        
+except:
+    print('error')
+
+# Seccion 14
+
+try:
+   
+    container_father(driver,3,False)
+
+    insert_image('https://magianegrachicago.com/wp-content/uploads/2023/07/amarres-en-chicago-efectivos-amarres-de-amor-chicago.jpg',False,False)
+    time.sleep(1)
+    
+    insert_title(driver,'Servicios', 1,False)
+    insert_paragraph(driver,'Lorem ipsum dolor sit amet',True)
+    insert_paragraph(driver,'Lorem ipsum dolor sit amet',True)
+
+    insert_title(driver,'Adress', 1,False)
+    insert_paragraph(driver,'Lorem ipsum dolor sit amet',True)
+
+    insert_title(driver,'Phone', 1,False)
+    insert_paragraph(driver,'+1 6565465465',True)
+
+except:
+    print('error')
+
 
 
 time.sleep(600)
 driver.quit()
-
-
-# COntenedor simplre
-# COntenedor simplre
-# Condenido x
-# Ir al padre del contenedor
-# Agregar con mas Negro, nuevo contenedor simple
