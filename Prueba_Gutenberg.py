@@ -17,6 +17,14 @@ def scroll_down(driver):
     except Exception as e:
         print("No hay scroll", e)
 
+def insert_shortcode(driver,shortcode):
+    wait_and_insert_item(driver,'Shortcode','components-button.block-editor-block-types-list__item.editor-block-list-item-shortcode',False)
+    wait_and_send_keys(driver,By.CLASS_NAME,'block-editor-plain-text.blocks-shortcode__textarea', shortcode)
+
+def insert_HTML(driver,html):
+    wait_and_insert_item(driver,'Custom HTML','components-button.block-editor-block-types-list__item.editor-block-list-item-html',False)
+    wait_and_send_keys(driver,By.CLASS_NAME,'block-editor-block-list__block.wp-block.block-library-html__edit.wp-block-html', html)
+
 def insert_image(url,col,cover):
     time.sleep(2)
    
@@ -33,6 +41,20 @@ def insert_image(url,col,cover):
         Btns = driver.find_elements(By.CSS_SELECTOR,'.components-menu-group button')
         last_Btn = Btns[0]
         last_Btn.click()
+
+def insert_video(url,col):
+    time.sleep(2)
+   
+    wait_and_insert_item(driver,'Video','components-button.block-editor-block-types-list__item.editor-block-list-item-video',col)
+
+    wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-media-placeholder__button.is-tertiary')
+    wait_and_send_keys(driver, By.CLASS_NAME, 'block-editor-media-placeholder__url-input-field', url)
+    wait_and_click(driver, By.CLASS_NAME, 'components-button.block-editor-media-placeholder__url-input-submit-button.has-icon')
+
+    wait_and_click(driver,By.CLASS_NAME,'components-dropdown.components-dropdown-menu.block-editor-block-settings-menu')
+    Btns = driver.find_elements(By.CSS_SELECTOR,'.components-menu-group button')
+    last_Btn = Btns[0]
+    last_Btn.click()
 
 def image_cover(driver):
     time.sleep(2)
@@ -101,6 +123,8 @@ def insert_paragraph(driver,text,col):
     wait_and_insert_item(driver,'Paragraph','components-button.block-editor-block-types-list__item.editor-block-list-item-paragraph',col)
     wait_and_send_keys(driver,By.CLASS_NAME,'block-editor-rich-text__editable.block-editor-block-list__block.wp-block.is-selected.wp-block-paragraph.rich-text',text)
     wait_and_send_keys(driver,By.CLASS_NAME,'block-editor-rich-text__editable.block-editor-block-list__block.wp-block.is-selected.wp-block-paragraph.rich-text',Keys.ESCAPE)
+    scroll_down(driver)
+    time.sleep(2)
     wait_and_click(driver,By.CLASS_NAME,'components-button.block-selection-button_select-button')
     wait_and_click(driver,By.CLASS_NAME,'components-dropdown.components-dropdown-menu.block-editor-block-settings-menu')
     Btns = driver.find_elements(By.CSS_SELECTOR,'.components-menu-group button')
@@ -206,6 +230,154 @@ def add_column(driver,col):
 
     wait_and_insert_item(driver,"container", 'components-button.block-editor-block-types-list__item.editor-block-list-item-uagb-container',col)
 
+# Componentes
+def HEADER_PRINCIPAL_DE_PAGINAS(driver):
+    container_father(driver,0,False)
+
+    insert_image('https://magianegrachicago.com/wp-content/uploads/2023/07/amarres-en-chicago-efectivos-amarres-de-amor-chicago.jpg',False,True)
+
+    insert_title(driver,'#1 EN BRUJOS EN CHICAGO IL', 0, False)
+    insert_title(driver,'+1 872-314-5247', 1,False)
+    insert_title(driver,'BRUJO PODEROSOS EN HECHICERÍA Y MAGIA NEGRA CON VUDÚ Y AMARRE DE PAREJAS, AMOR Y DINERO.', 1,False)
+    insert_button(driver,'¡LLAMA HOY +1 872-314-5247!','tel:1111111',1,False)
+    insert_button(driver,'TRABAJOS A DISTANCIA 100% GARANTIZADOS','tel:1111111',1,False)
+
+def IMAGEN_PARRAFO (driver):
+    container_father(driver,0,False)
+
+    insert_title(driver,'Añade aquí tu texto de cabecera', 1,False)
+
+    container_father(driver,1,False)
+
+    insert_image('https://magianegrachicago.com/wp-content/uploads/2023/07/amarres-en-chicago-efectivos-amarres-de-amor-chicago.jpg',False,False)
+    insert_paragraph(driver,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',False)
+
+def AREA_DE_SERVICIOS(driver):
+    for _ in range(2):
+        container_father(driver,3,False)
+
+        for _ in range(4):
+            insert_image('https://imgs.search.brave.com/YTY9SurNAwLvr1qDnR8Hn9mn2vH5ITPfZe26jpeFEQs/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudGhlbm91bnBy/b2plY3QuY29tL3Bu/Zy8xMTE5NTAyLTIw/MC5wbmc',False,False)
+            insert_title(driver,'AMARRES DE AMOR', 2,True)
+
+
+    container_father(driver,0,False)
+
+    wait_and_insert_item(driver,'Shortcode','components-button.block-editor-block-types-list__item.editor-block-list-item-shortcode',False)
+
+def LLAMADO_DE_ACCION_1(driver):
+    container_father(driver,0,False)
+    
+    insert_title(driver,'Añade aquí tu texto de cabecera', 1,False)
+    insert_paragraph(driver,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut ',False)
+    insert_paragraph(driver,'Llámame al : 872-314-5247 ',False)
+
+    insert_button(driver,'AMARRES DE AMOR DALLAS TX','tel:1111111',1,False)
+
+def PARRAFO_BENEFICIOS(driver):
+    container_father(driver,1,False)
+
+    insert_title(driver,'¿Cómo trabajamos en la Botanica del Amor?', 1,False)
+    insert_paragraph(driver,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut ',True)
+
+    insert_shortcode(driver,'[wpforms id="7"]')
+
+def GALERIA_VIDEOS(driver):
+    container_father(driver,0,False)
+
+    insert_title(driver,'Ayudas espirituales y Brujeria del amor en Chicago', 1,False)
+
+    container_father(driver,1,False)
+
+    insert_title(driver,'Ayudas espirituales y Brujeria del amor en Chicago', 1,False)
+    insert_paragraph(driver,'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',True)
+
+    insert_video('https://youtu.be/BEQ_HMJaxS0',False)
+
+    container_father(driver,1,False)
+
+    insert_video('https://youtu.be/BEQ_HMJaxS0',False)
+
+    insert_title(driver,'Ayudas espirituales y Brujeria del amor en Chicago', 2,False)
+    insert_paragraph(driver,'Excepteur sint occaecat cupidatat non proident',True)
+    insert_paragraph(driver,'Llamanos al :+1 872-314-5247',True)
+
+    insert_button(driver,'CONTACTANOS','http://+18723145247/',1,False)
+
+def LLAMADO_DE_ACCION_2(driver):
+    container_father(driver,0,False)
+    
+    insert_title(driver,'Añade aquí tu texto de cabecera', 1,False)
+    insert_paragraph(driver,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut ',False)
+    insert_paragraph(driver,'Llámame al : 872-314-5247 ',False)
+
+    insert_button(driver,'AMARRES DE AMOR DALLAS TX','tel:1111111',1,False)
+
+def PARRAFO_CIUDAD_MAPA_NO_GEO(driver):
+    container_father(driver,1,False)
+
+    insert_title(driver,'Añade aquí tu texto de cabecera', 1,False)
+    insert_paragraph(driver,'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',True)
+
+    wait_and_insert_item(driver,'Shortcode','components-button.block-editor-block-types-list__item.editor-block-list-item-shortcode',False)
+
+def RECURSOS(driver):
+    container_father(driver,2,False)
+
+    for _ in range(3):
+        insert_image('https://botanicadelamor.com/wp-content/uploads/2023/04/botanica-del-amor-amarres-de-amor-chicago-illinois-768x768.jpg',False,False)
+        insert_title(driver,'GUBERNAMENTAL', 2,True)
+        insert_title(driver,'Texto por hiper enlace', 3,True)
+        insert_title(driver,'Texto por hiper enlace', 3,True)
+        insert_title(driver,'Texto por hiper enlace', 3,True)
+
+def PARRAFO_CONCLUSION(driver):
+    container_father(driver,0,False)
+
+    insert_title(driver,'GUBERNAMENTAL', 1,False)
+    insert_paragraph(driver,'Lorem fistrum por la gloria de mi madre esse jarl aliqua llevame al sircoo. De la pradera ullamco qué dise usteer está la cosa muy malar.Lorem fistrum por la gloria de mi madre esse jarl aliqua llevame al sircoo. De la pradera ullamco qué dise usteer está la cosa muy malar.Lorem fistrum por la gloria de mi madre esse jarl aliqua llevame al sircoo. De la pradera ullamco qué dise usteer está la cosa muy malar.Lorem fistrum por la gloria de mi madre esse jarl aliqua llevame al sircoo. De la pradera ullamco qué dise usteer está la cosa muy malar.Lorem fistrum por la gloria de mi madre esse jarl aliqua llevame al sircoo. De la pradera ullamco qué dise usteer está la cosa muy malar.Lorem fistrum por la gloria de mi madre esse jarl aliqua llevame al sircoo. De la pradera ullamco qué dise usteer está la cosa muy malar.Lorem fistrum por la gloria de mi madre esse jarl aliqua llevame al sircoo. De la pradera ullamco qué dise usteer está la cosa muy malar.',False)
+
+def ZIP_CODE_SIN_GEO(driver):
+    container_father(driver,0,False)
+
+    insert_title(driver,'Párrafo Conclusión', 1,False)
+
+    container_father(driver,3,False)
+
+    for _ in range(3):
+        insert_paragraph(driver,'4411',False)
+        for _ in range(12):
+            insert_paragraph(driver,'4411',True)
+
+def GEOLOCALIZACION(driver):
+    container_father(driver,0,False)
+
+    insert_title(driver,'UBICACION', 1,False)
+    insert_paragraph(driver,'istrum por la gloria de mi madre esse jarl aliqua llevame al sircoo. De la pradera ullamco qué dise usteer está la cosa muy malar.',False)
+
+    container_father(driver,2,False)
+
+    for _ in range(3):
+        insert_image('https://imgs.search.brave.com/YTY9SurNAwLvr1qDnR8Hn9mn2vH5ITPfZe26jpeFEQs/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudGhlbm91bnBy/b2plY3QuY29tL3Bu/Zy8xMTE5NTAyLTIw/MC5wbmc',False,False)
+
+    container_father(driver,0,False)
+
+    insert_title(driver,'Como llegar a nuestra Botánica Del Amor', 1,False)
+
+    container_father(driver,0,False)
+
+    insert_paragraph(driver,'Lorem fistrum por la gloria de mi madre esse jarl aliqua llevame al sircoo. De la pradera ullamco qué dise usteer está la cosa muy malar.Lorem fistrum por la gloria de mi madre esse jarl aliqua llevame al sircoo. De la pradera ullamco qué dise usteer está la cosa muy malar.Lorem fistrum por la gloria de mi madre esse jarl aliqua llevame al sircoo. De la pradera ullamco qué dise usteer está la cosa muy malar.Lorem fistrum por la gloria de mi madre esse jarl aliqua llevame al sircoo. De la pradera ullamco qué dise usteer está la cosa muy malar.Lorem fistrum por la gloria de mi madre esse jarl aliqua llevame al sircoo. De la pradera ullamco qué dise usteer está la cosa muy malar.Lorem fistrum por la gloria de mi madre esse jarl aliqua llevame al sircoo. De la pradera ullamco qué dise usteer está la cosa muy malar.Lorem fistrum por la gloria de mi madre esse jarl aliqua llevame al sircoo. De la pradera ullamco qué dise usteer está la cosa muy malar.',False)
+
+    container_father(driver,2,False)
+
+    for _ in range(3):
+        wait_and_insert_item(driver,'Shortcode','components-button.block-editor-block-types-list__item.editor-block-list-item-shortcode',False)
+
+    container_father(driver,1,False)
+
+    wait_and_insert_item(driver,'Shortcode','components-button.block-editor-block-types-list__item.editor-block-list-item-shortcode',False)
+    insert_video('https://youtu.be/BEQ_HMJaxS0',False)
+
 options = webdriver.ChromeOptions()
 options.service_args = ['--executable_path=C:\driver_chrome\chromedriver.exe']
 
@@ -222,168 +394,40 @@ wait_and_click(driver, By.ID, 'wp-submit')
 wait_and_click(driver, By.ID, 'menu-pages')
 wait_and_click(driver, By.CLASS_NAME, 'page-title-action')
 
-# Seccion 1
 
-container_father(driver,0,False)
+# HEADER_PRINCIPAL_DE_PAGINAS(driver)
 
-insert_image('https://magianegrachicago.com/wp-content/uploads/2023/07/amarres-en-chicago-efectivos-amarres-de-amor-chicago.jpg',False,True)
+# IMAGEN_PARRAFO (driver)
 
-insert_title(driver,'Titulo para la demostracion', 0, False)
-insert_title(driver,'Este es un H2', 1,False)
-insert_button(driver,'Boton','tel:1111111',1,False)
+# AREA_DE_SERVICIOS(driver)
 
-# Seccion 2
+# LLAMADO_DE_ACCION_1(driver)
 
-container_father(driver,0,False)
 
-insert_title(driver,'Este es un H2', 1,False)
-insert_paragraph(driver,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',False)
+# PARRAFO_BENEFICIOS(driver)
 
-# Seccion 3
 
-container_father(driver,1,False)
+# GALERIA_VIDEOS(driver)
 
-insert_title(driver,'Este es un H2 DE OTRA SECCION', 1,False)
-insert_button(driver,'anyway','tel:1111111',1,True)
 
-insert_image('https://magianegrachicago.com/wp-content/uploads/2023/07/amarres-en-chicago-efectivos-amarres-de-amor-chicago.jpg',False,False)
+# LLAMADO_DE_ACCION_2(driver)
 
-# Seccion 4
 
-container_father(driver,0,False)
+# PARRAFO_CIUDAD_MAPA_NO_GEO(driver)
 
-insert_title(driver,'Este es un llamado de accion', 1,False)
-insert_paragraph(driver,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',False)
-insert_button(driver,'Boton','tel:1111111',1,False)
 
-# Seccion 5
+# RECURSOS(driver)
 
-container_father(driver,0,False)
-insert_title(driver,'Servicios', 1,False)
 
-try:
-    for _ in range(2):
-        container_father(driver,2,False)
+# PARRAFO_CONCLUSION(driver)
 
-        for _ in range(3):
-            insert_image('https://magianegrachicago.com/wp-content/uploads/2023/07/amarres-en-chicago-efectivos-amarres-de-amor-chicago.jpg',False,False)
-            time.sleep(1)
-            insert_title(driver,'Este es un H2 DE OTRA SECCION', 1,True)
-            time.sleep(1)
-            insert_paragraph(driver,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',True)
-except:
-    print('error')
 
-# Seccion 6
+# ZIP_CODE_SIN_GEO(driver)
 
-container_father(driver,0,False)
 
-insert_title(driver,'Reseñas', 1,False)
-insert_paragraph(driver,'Lorem ipsum dolor sit amet.',True)
+# GEOLOCALIZACION(driver)
 
-# # Seccion 7
-
-container_father(driver,1,False)
-
-insert_title(driver,'Titulo muy ataractivo a la lectura', 1,False)
-insert_paragraph(driver,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',True)
-
-insert_title(driver,'Esto es un video', 1,False)
-
-# Seccion 8 
-
-container_father(driver,1,False)
-
-insert_title(driver,'Titulo para segundo llamado de accion', 1,False)
-
-insert_title(driver,'Titulo muy ataractivo a la lectura', 1,False)
-insert_button(driver,'Llamame','tel:1111111',1, True)
-
-# Seccion 9
-
-container_father(driver,1,False)
-
-insert_title(driver,'[Shortcode]', 1,False)
-
-insert_title(driver,'Otros servicios que ofrezco', 1,False)
-insert_title(driver,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 1,False)
-insert_button(driver,'Boton','tel:1111111',1,True)
-
-# Seccion 10
-
-container_father(driver,0,False)
-
-insert_title(driver,'Este es un llamado de accion', 1,False)
-insert_paragraph(driver,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',False)
-insert_button(driver,'Boton','tel:1111111',1,False)
-
-#Seccion 11
-
-container_father(driver,0,False)
-
-insert_title(driver,'Mapa', 1,False)
-insert_title(driver,'Mapa shortcode', 1,False)
-
-# Seccion 12
-
-container_father(driver,1,False)
-insert_title(driver,'Nuestros clientes satisfechos', 1,False)
-
-try:
-   
-    container_father(driver,2,False)
-
-    for _ in range(3):
-        insert_image('https://magianegrachicago.com/wp-content/uploads/2023/07/amarres-en-chicago-efectivos-amarres-de-amor-chicago.jpg',False,False)
-        time.sleep(1)
-        insert_paragraph(driver,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',True)
-        time.sleep(1)
-        insert_title(driver,'Personas nombre', 1,True)
-except:
-    print('error')
-
-# Seccion 13
-
-container_father(driver,1,False)
-insert_title(driver,'Mas recursos', 1,False)
-
-try:
-   
-    container_father(driver,2,False)
-
-    for _ in range(3):
-        insert_title(driver,'Titulo recursos', 1,True)
-        time.sleep(1)
-        insert_button(driver,'Boton','tel:1111111',1,True)
-        time.sleep(1)
-        insert_button(driver,'Boton','tel:1111111',1,True)
-        time.sleep(1)
-        insert_button(driver,'Boton','tel:1111111',1,True)
-        
-except:
-    print('error')
-
-# Seccion 14
-
-try:
-   
-    container_father(driver,3,False)
-
-    insert_image('https://magianegrachicago.com/wp-content/uploads/2023/07/amarres-en-chicago-efectivos-amarres-de-amor-chicago.jpg',False,False)
-    time.sleep(1)
-    
-    insert_title(driver,'Servicios', 1,False)
-    insert_paragraph(driver,'Lorem ipsum dolor sit amet',True)
-    insert_paragraph(driver,'Lorem ipsum dolor sit amet',True)
-
-    insert_title(driver,'Adress', 1,False)
-    insert_paragraph(driver,'Lorem ipsum dolor sit amet',True)
-
-    insert_title(driver,'Phone', 1,False)
-    insert_paragraph(driver,'+1 6565465465',True)
-
-except:
-    print('error')
+insert_HTML(driver,'hola')
 
 time.sleep(60)
 driver.quit()
