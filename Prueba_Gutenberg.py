@@ -23,7 +23,7 @@ def insert_shortcode(driver,shortcode):
 
 def insert_HTML(driver,html):
     wait_and_insert_item(driver,'Custom HTML','components-button.block-editor-block-types-list__item.editor-block-list-item-html',False)
-    wait_and_send_keys(driver,By.CLASS_NAME,'block-editor-block-list__block.wp-block.block-library-html__edit.wp-block-html', html)
+    wait_and_send_keys(driver,By.CLASS_NAME,'block-editor-plain-text', html)
 
 def insert_image(url,col,cover):
     time.sleep(2)
