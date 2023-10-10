@@ -283,7 +283,7 @@ def PARRAFO_BENEFICIOS(driver):
     container_father(driver,1,False)
 
     insert_title(driver,'¿Cómo trabajamos en la Botanica del Amor?', 1,False)
-    insert_paragraph(driver,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut ',True)
+    insert_paragraph(driver,'En Gorillas Gym Bogotá ofrecemos una variedad de servicios para satisfacer todas tus necesidades de entrenamiento físico. Contamos con instalaciones de alta calidad y equipos modernos que te ayudarán a alcanzar tus metas de acondicionamiento físico.\n\nNuestro equipo de entrenadores altamente capacitados está disponible para brindarte asesoramiento personalizado y diseñar un plan de entrenamiento adaptado a tus necesidades y objetivos específicos.\n\nAdemás, ofrecemos una amplia variedad de clases grupales, como spinning, yoga, pilates y entrenamiento de fuerza, que te permitirán diversificar tus rutinas de ejercicio y mantenerte motivado.\n\nEn Gorillas Gym Bogotá también tenemos un servicio exclusivo de nutrición y asesoramiento dietético, para que puedas complementar tu entrenamiento con una alimentación balanceada y obtener resultados aún más satisfactorios.\n\nNo importa si eres un principiante o un atleta experimentado, en Gorillas Gym Bogotá encontrarás el ambiente perfecto para entrenar y alcanzar tus metas de fitness. ¡Ven y únete a nuestra comunidad fitness hoy! ',True)
 
     insert_shortcode(driver,'[wpforms id="7"]')
 
@@ -376,7 +376,7 @@ def GEOLOCALIZACION(driver):
     container_father(driver,2,False)
 
     for _ in range(3):
-        wait_and_insert_item(driver,'Shortcode','components-button.block-editor-block-types-list__item.editor-block-list-item-shortcode',False)
+        insert_mapa(driver,'https://www./google.com/maps/d/viewer?mid=1TRQM_J3hY2-zUevr8KYhG8Mi-AsIYOE&ll=41.830121660387796%2C-87.69220170000001&z=13')
 
     container_father(driver,1,False)
 
@@ -408,31 +408,21 @@ wait_and_click(driver, By.CLASS_NAME, 'page-title-action')
 
 # LLAMADO_DE_ACCION_1(driver)
 
-
 # PARRAFO_BENEFICIOS(driver)
-
 
 # GALERIA_VIDEOS(driver)
 
-
 # LLAMADO_DE_ACCION_2(driver)
-
 
 # PARRAFO_CIUDAD_MAPA_NO_GEO(driver)
 
-
 # RECURSOS(driver)
-
 
 # PARRAFO_CONCLUSION(driver)
 
-
 # ZIP_CODE_SIN_GEO(driver)
 
-
 # GEOLOCALIZACION(driver)
-
-insert_mapa(driver,'https://www.google.com/maps/d/viewer?mid=1TRQM_J3hY2-zUevr8KYhG8Mi-AsIYOE&ll=41.830121660387796%2C-87.69220170000001&z=13')
 
 time.sleep(60)
 driver.quit()
