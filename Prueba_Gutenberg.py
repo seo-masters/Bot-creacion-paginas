@@ -25,6 +25,11 @@ def insert_HTML(driver,html):
     wait_and_insert_item(driver,'Custom HTML','components-button.block-editor-block-types-list__item.editor-block-list-item-html',False)
     wait_and_send_keys(driver,By.CLASS_NAME,'block-editor-plain-text', html)
 
+def insert_mapa(driver,mapa):
+
+    mapaHTML = f'<iframe src="{mapa}" width="640" height="300"></iframe>'
+    insert_HTML(driver,mapaHTML)
+
 def insert_image(url,col,cover):
     time.sleep(2)
    
@@ -427,7 +432,7 @@ wait_and_click(driver, By.CLASS_NAME, 'page-title-action')
 
 # GEOLOCALIZACION(driver)
 
-insert_HTML(driver,'hola')
+insert_mapa(driver,'https://www.google.com/maps/d/viewer?mid=1TRQM_J3hY2-zUevr8KYhG8Mi-AsIYOE&ll=41.830121660387796%2C-87.69220170000001&z=13')
 
 time.sleep(60)
 driver.quit()
